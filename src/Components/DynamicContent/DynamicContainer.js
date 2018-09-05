@@ -1,149 +1,160 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles, AppBar, Tabs, Tab, Typography, Button} from '@material-ui/core';
-import SwipeableViews from 'react-swipeable-views';
-import style from './style.css'
+import React, { Component, Fragment } from 'react'
+import PropTypes from 'prop-types'
+import { withStyles, Tabs, Tab, Typography, Button } from '@material-ui/core'
+import SwipeableViews from 'react-swipeable-views'
+import axios from 'axios'
+const tabsArray = [1998, 2002, 2006, 2012, 2014, 2018]
+const newsArray = require('./NewsArray.json')
 
+const styles = theme => ({
+  root: {
+    flexGrow: 1,
+    backgroundColor: theme.palette.background.paper
+  },
+  tabsRoot: {
+    borderBottom: '1px solid #e8e8e8'
+  },
+  tabsIndicator: {
+    background: 'transparent'
+  },
+  tabRoot: {
+    textTransform: 'initial',
+    minWidth: 72,
+    maxWidth: '10%',
+    fontWeight: theme.typography.fontWeightRegular,
+    marginRight: theme.spacing.unit * 10,
+    border: '1px solid #000',
+    fontFamily: [
+      '-apple-system',
+      'BlinkMacSystemFont',
+      '"Segoe UI"',
+      'Roboto',
+      '"Helvetica Neue"',
+      'Arial',
+      'sans-serif',
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"'
+    ].join(','),
+    '&:hover': {
+      color: '#40a9ff',
+      opacity: 1,
+      borderColor: '#40a9ff'
+    },
+    '&$tabSelected': {
+      color: '#1890ff',
+      fontWeight: theme.typography.fontWeightMedium
+    },
+    '&:focus': {
+      color: '#40a9ff'
+    }
+  },
+  wrapper: {
+    display: 'flex',
+    justifyContent: 'space-around',
+    width: '100%'
+  },
+  tabSelected: {},
+  typography: {
+    padding: theme.spacing.unit * 3
+  }
+})
 
 function TabContainer({ children, dir }) {
   return (
     <Typography component="div" dir={dir} style={{ padding: 8 * 6 }}>
       {children}
     </Typography>
-  );
+  )
 }
 
 TabContainer.propTypes = {
   children: PropTypes.node.isRequired,
-  dir: PropTypes.string.isRequired,
-};
+  dir: PropTypes.string.isRequired
+}
 
-const styles = theme => ({
-  root: {
-    backgroundColor: "#002140",
-  },
-});
-
-class FullWidthTabs extends React.Component {
+class DynamicContainer extends Component {
   state = {
     value: 0,
-  };
+    results: []
+  }
+
+  componentDidMount() {
+    fetch('./NewsArray.json')
+      .then(response => response.json())
+      .then(data => {
+        this.setState({ results: data })
+      })
+  }
+
+  componentWillUnmount() {
+    this.serverRequest.abort()
+  }
 
   handleChange = (event, value) => {
-    this.setState({ value });
-  };
+    this.setState({ value })
+  }
 
   handleChangeIndex = index => {
-    this.setState({ value: index });
-  };
+    this.setState({ value: index })
+  }
 
   render() {
-    const { classes, theme } = this.props;
+    const { classes, theme } = this.props
 
     return (
       <div className={classes.root}>
-        <AppBar position="static" color="default">
-          <div className="tabs__container"
-            value={this.state.value}
-            onChange={this.handleChange}
-            indicatorColor="primary"
-            textColor="primary"
-            fullWidth
-          >
-            <Button className={classes.button}>1998</Button>
-            <Button className={classes.button}>2002</Button>
-            <Button className={classes.button}>2006</Button>
-            <Button className={classes.button}>2012</Button>
-            <Button className={classes.button}>2014</Button>
-            <Button className={classes.button}>2018</Button>
-          </div>
-        </AppBar>
-        <SwipeableViews
-          axis={theme.direction === 'ltr' ? 'x-reverse' : 'x'}
-          index={this.state.value}
-          onChangeIndex={this.handleChangeIndex}
+        <Tabs
+          centered={true}
+          value={this.state.value}
+          onChange={this.handleChange}
+          indicatorColor="primary"
+          textColor="primary"
+          fullWidth
+          classes={{ root: classes.tabsRoot, indicator: classes.tabsIndicator }}
         >
-          <TabContainer dir={theme.direction}>
-            <Typography variant="headline" component="h3">
-              This is a sheet of paper.
-            </Typography>
-            <Typography component="h1">
-              Lorem ipsum projection lorem
-            </Typography>
-            <Typography component="p">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut nim ad minim veniam
-              Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-            </Typography>
-          </TabContainer>
-          <TabContainer dir={theme.direction}>
-            <Typography variant="headline" component="h3">
-              This is a sheet of paper.
-            </Typography>
-            <Typography component="h1">
-              Lorem ipsum projection lorem
-            </Typography>
-            <Typography component="p">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut nim ad minim veniam
-              Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-            </Typography>
-          </TabContainer>
-          <TabContainer dir={theme.direction}>
-            <Typography variant="headline" component="h3">
-              This is a sheet of paper.
-            </Typography>
-            <Typography component="h1">
-              Lorem ipsum projection lorem
-            </Typography>
-            <Typography component="p">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut nim ad minim veniam
-              Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-            </Typography>
-          </TabContainer>
-          <TabContainer dir={theme.direction}>
-            <Typography variant="headline" component="h3">
-              This is a sheet of paper.
-            </Typography>
-            <Typography component="h1">
-              Lorem ipsum projection lorem
-            </Typography>
-            <Typography component="p">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut nim ad minim veniam
-              Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-            </Typography>
-          </TabContainer>
-          <TabContainer dir={theme.direction}>
-            <Typography variant="headline" component="h3">
-              This is a sheet of paper.
-            </Typography>
-            <Typography component="h1">
-              Lorem ipsum projection lorem
-            </Typography>
-            <Typography component="p">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut nim ad minim veniam
-              Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-            </Typography>
-          </TabContainer>
-          <TabContainer dir={theme.direction}>
-            <Typography variant="headline" component="h3">
-              This is a sheet of paper.
-            </Typography>
-            <Typography component="h1">
-              Lorem ipsum projection lorem
-            </Typography>
-            <Typography component="p">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut nim ad minim veniam
-              Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat
-            </Typography>
-          </TabContainer>
-        </SwipeableViews>
+          {tabsArray.map((t, i) => {
+            return (
+              <Tab
+                key={i}
+                label={t}
+                disableRipple
+                classes={{
+                  root: classes.tabRoot,
+                  selected: classes.tabSelected
+                }}
+              />
+            )
+          })}
+        </Tabs>
+        <div className="containt_wrapper">
+          <SwipeableViews
+            axis={theme.direction === 'ltr' ? 'x-reverse' : 'x'}
+            index={this.state.value}
+            onChangeIndex={this.handleChangeIndex}
+          >
+            <TabContainer dir={theme.direction}>
+              {this.state.results.map(function(job) {
+                return (
+                  <div key={job.id} className="job">
+                    <a href={job.main}>
+                      {job.midle}
+                      {job.end}
+                    </a>
+                  </div>
+                )
+              })}
+            </TabContainer>
+          </SwipeableViews>
+        </div>
       </div>
-    );
+    )
   }
 }
 
-FullWidthTabs.propTypes = {
+DynamicContainer.propTypes = {
   classes: PropTypes.object.isRequired,
-  theme: PropTypes.object.isRequired,
-};
+  theme: PropTypes.object.isRequired
+}
 
-export default withStyles(styles, { withTheme: true })(FullWidthTabs);
+export default withStyles(styles, { withTheme: true })(DynamicContainer)

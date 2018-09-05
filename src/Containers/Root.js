@@ -8,10 +8,9 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 import lightBlue from '@material-ui/core/colors/lightBlue'
 import { TopHeaderLogo, SimpleBottomNavigation } from '../Components/Navigation'
+import StaticContainer from '../Components/StaticContent/StaticContainer'
+import DynamicContainer from '../Components/DynamicContent/DynamicContainer'
 import 'typeface-roboto'
-
-/*Import Views*/
-import { People, Planets, Vehicles, Films, Species } from '../Components/Views'
 
 const store = configureStore()
 
@@ -20,8 +19,10 @@ const theme = createMuiTheme({
     primary: {
       main: '#002140'
     },
+    textPrimary: {},
     secondary: lightBlue
-  },typography: {
+  },
+  typography: {
     fontFamily: [
       '-apple-system',
       'BlinkMacSystemFont',
@@ -32,9 +33,9 @@ const theme = createMuiTheme({
       'sans-serif',
       '"Apple Color Emoji"',
       '"Segoe UI Emoji"',
-      '"Segoe UI Symbol"',
-    ].join(','),
-  },
+      '"Segoe UI Symbol"'
+    ].join(',')
+  }
 })
 
 const styles = {
@@ -70,13 +71,8 @@ class Root extends Component {
           <MuiThemeProvider theme={theme}>
             <div className={classes.root}>
               <TopHeaderLogo />
-              <Switch>
-                <Route exact path="/" component={Layout} />
-                <Route path="/species" component={Species} />
-                <Route path="/people" component={People} />
-                <Route path="/planets" component={Planets} />
-                <Route path="/vehicles" component={Vehicles} />
-              </Switch>
+              <StaticContainer />
+              <DynamicContainer />
               <SimpleBottomNavigation />
             </div>
           </MuiThemeProvider>
