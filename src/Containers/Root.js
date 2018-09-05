@@ -1,9 +1,6 @@
 import React, { Component } from 'react'
 import { withStyles } from '@material-ui/core/styles'
-import { Provider } from 'react-redux'
 import PropTypes from 'prop-types'
-import configureStore from '../store'
-import Layout from './Layout'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 import lightBlue from '@material-ui/core/colors/lightBlue'
@@ -11,8 +8,7 @@ import { TopHeaderLogo, SimpleBottomNavigation } from '../Components/Navigation'
 import StaticContainer from '../Components/StaticContent/StaticContainer'
 import DynamicContainer from '../Components/DynamicContent/DynamicContainer'
 import 'typeface-roboto'
-
-const store = configureStore()
+import { news } from '../store'
 
 const theme = createMuiTheme({
   palette: {
@@ -66,18 +62,14 @@ class Root extends Component {
   render() {
     const { classes } = this.props
     return (
-      <Provider store={store}>
-        <BrowserRouter>
-          <MuiThemeProvider theme={theme}>
-            <div className={classes.root}>
-              <TopHeaderLogo />
-              <StaticContainer />
-              <DynamicContainer />
-              <SimpleBottomNavigation />
-            </div>
-          </MuiThemeProvider>
-        </BrowserRouter>
-      </Provider>
+      <MuiThemeProvider theme={theme}>
+        <div className={classes.root}>
+          <TopHeaderLogo />
+          <StaticContainer />
+          <DynamicContainer news={news} />
+          <SimpleBottomNavigation />
+        </div>
+      </MuiThemeProvider>
     )
   }
 }

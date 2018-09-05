@@ -1,7 +1,11 @@
+body{
+  margin: 0;
+  padding:0;
+}
+
 .App {
   text-align: center;
 }
-
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
   height: 80px;
@@ -37,7 +41,34 @@
   justify-content: space-around;
   padding: 0;
 }
-
+[class*="MuiTabs-flexContainer"]{
+  justify-content: space-between;
+  width: 90%;
+  margin: 0 auto;
+}
+[class*="MuiTabs-flexContainer"]:after{
+  display: block;
+  content: "";
+  height:1px;
+  width: 90%;
+  position: absolute;
+  top:50%;
+  background-color: cadetblue;
+  z-index:1;
+}
+.article_wrapper{
+  display: flex;
+  flex-flow: row wrap;
+  width:68%;
+}
+.news__title{
+  max-width: 260px;
+}
+.news__card{
+  width: 40%;
+  box-shadow: none;
+  margin: 0 5% 2% 0!important;
+}
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }

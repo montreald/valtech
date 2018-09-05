@@ -4,10 +4,12 @@ import { connect } from 'react-redux'
 import { fetchItemsIfNeeded } from '../Actions/items'
 import StaticContainer from '../Components/StaticContent/StaticContainer'
 import DynamicContainer from '../Components/DynamicContent/DynamicContainer'
+import { news } from '../store'
 
 class AsyncApp extends Component {
   constructor(props) {
     super(props)
+
     this.handleChange = this.handleChange.bind(this)
   }
 
@@ -27,10 +29,10 @@ class AsyncApp extends Component {
     return (
       <div className="container">
         <header className="header">
-          <StaticContainer/>
+          <StaticContainer />
         </header>
         <section className="content">
-          <DynamicContainer/>
+          <DynamicContainer news={news} />
         </section>
       </div>
     )

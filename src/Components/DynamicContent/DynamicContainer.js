@@ -1,10 +1,16 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
-import { withStyles, Tabs, Tab, Typography, Button } from '@material-ui/core'
+import {
+  withStyles,
+  Tabs,
+  Tab,
+  Typography,
+  Card,
+  CardContent,
+  AppBar
+} from '@material-ui/core'
 import SwipeableViews from 'react-swipeable-views'
-import axios from 'axios'
 const tabsArray = [1998, 2002, 2006, 2012, 2014, 2018]
-const newsArray = require('./NewsArray.json')
 
 const styles = theme => ({
   root: {
@@ -22,8 +28,9 @@ const styles = theme => ({
     minWidth: 72,
     maxWidth: '10%',
     fontWeight: theme.typography.fontWeightRegular,
-    marginRight: theme.spacing.unit * 10,
     border: '1px solid #000',
+    background: '#fff',
+    zIndex: 5,
     fontFamily: [
       '-apple-system',
       'BlinkMacSystemFont',
@@ -54,7 +61,9 @@ const styles = theme => ({
     justifyContent: 'space-around',
     width: '100%'
   },
-  tabSelected: {},
+  tabSelected: {
+    borderColor: '#40a9ff'
+  },
   typography: {
     padding: theme.spacing.unit * 3
   }
@@ -75,20 +84,7 @@ TabContainer.propTypes = {
 
 class DynamicContainer extends Component {
   state = {
-    value: 0,
-    results: []
-  }
-
-  componentDidMount() {
-    fetch('./NewsArray.json')
-      .then(response => response.json())
-      .then(data => {
-        this.setState({ results: data })
-      })
-  }
-
-  componentWillUnmount() {
-    this.serverRequest.abort()
+    value: 0
   }
 
   handleChange = (event, value) => {
@@ -100,51 +96,86 @@ class DynamicContainer extends Component {
   }
 
   render() {
-    const { classes, theme } = this.props
+    const { classes, theme, news } = this.props
 
     return (
       <div className={classes.root}>
-        <Tabs
-          centered={true}
-          value={this.state.value}
-          onChange={this.handleChange}
-          indicatorColor="primary"
-          textColor="primary"
-          fullWidth
-          classes={{ root: classes.tabsRoot, indicator: classes.tabsIndicator }}
-        >
-          {tabsArray.map((t, i) => {
-            return (
-              <Tab
-                key={i}
-                label={t}
-                disableRipple
-                classes={{
-                  root: classes.tabRoot,
-                  selected: classes.tabSelected
-                }}
-              />
-            )
-          })}
-        </Tabs>
+        <AppBar position="static" color="default">
+          <Tabs
+            value={this.state.value}
+            onChange={this.handleChange}
+            indicatorColor="primary"
+            textColor="primary"
+            fullWidth
+            classes={{
+              root: classes.tabsRoot,
+              indicator: classes.tabsIndicator
+            }}
+          >
+            {tabsArray.map((t, i) => {
+              return (
+                <Tab
+                  key={i}
+                  label={t}
+                  disableRipple
+                  classes={{
+                    root: classes.tabRoot,
+                    selected: classes.tabSelected
+                  }}
+                />
+              )
+            })}
+          </Tabs>
+        </AppBar>
         <div className="containt_wrapper">
           <SwipeableViews
             axis={theme.direction === 'ltr' ? 'x-reverse' : 'x'}
             index={this.state.value}
             onChangeIndex={this.handleChangeIndex}
           >
-            <TabContainer dir={theme.direction}>
-              {this.state.results.map(function(job) {
-                return (
-                  <div key={job.id} className="job">
-                    <a href={job.main}>
-                      {job.midle}
-                      {job.end}
-                    </a>
+            {news.map(c => {
+              return (
+                <TabContainer key={c.id} dir={theme.direction}>
+                  <Typography
+                    variant="display1"
+                    gutterBottom
+                    className="news__title"
+                  >
+                    {c.article_1}
+                  </Typography>
+                  <div className="article_wrapper">
+                    <Typography
+                      variant="subheading"
+                      gutterBottom
+                      className="news__card"
+                    >
+                      {c.article_2}
+                    </Typography>
+                    <Typography
+                      variant="subheading"
+                      gutterBottom
+                      className="news__card"
+                    >
+                      {c.article_3}
+                    </Typography>
+                    <Typography
+                      variant="subheading"
+                      gutterBottom
+                      className="news__card"
+                    >
+                      {c.article_4}
+                    </Typography>
+                    <Typography
+                      variant="subheading"
+                      gutterBottom
+                      className="news__card"
+                    >
+                      {c.article_5}
+                    </Typography>
                   </div>
-                )
-              })}
-            </TabContainer>
+                </TabContainer>
+              )
+            })}
           </SwipeableViews>
         </div>
       </div>
