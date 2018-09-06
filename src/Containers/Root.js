@@ -1,14 +1,13 @@
 import React, { Component } from 'react'
 import { withStyles } from '@material-ui/core/styles'
 import PropTypes from 'prop-types'
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 import lightBlue from '@material-ui/core/colors/lightBlue'
-import { TopHeaderLogo, SimpleBottomNavigation } from '../Components/Navigation'
+import { TopHeaderLogo } from '../Components/Navigation'
 import StaticContainer from '../Components/StaticContent/StaticContainer'
 import DynamicContainer from '../Components/DynamicContent/DynamicContainer'
 import 'typeface-roboto'
-import { news } from '../store'
+import { news, data } from '../store'
 
 const theme = createMuiTheme({
   palette: {
@@ -66,8 +65,7 @@ class Root extends Component {
         <div className={classes.root}>
           <TopHeaderLogo />
           <StaticContainer />
-          <DynamicContainer news={news} />
-          <SimpleBottomNavigation />
+          <DynamicContainer news={news} data={data} />
         </div>
       </MuiThemeProvider>
     )

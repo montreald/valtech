@@ -46,20 +46,31 @@ body{
   width: 90%;
   margin: 0 auto;
 }
-[class*="MuiTabs-flexContainer"]:after{
+.app_tab{
+  position: relative;
+  background: transparent!important;
+  box-shadow: none!important;
+}
+.app_tab:after {
   display: block;
   content: "";
-  height:1px;
-  width: 90%;
+  height: 2px;
+  width: 80%;
   position: absolute;
-  top:50%;
+  top: 49%;
+  left: 50%;
   background-color: cadetblue;
-  z-index:1;
+  z-index: 1;
+  margin-left: -40%;
+}
+.containt_wrapper{
+  width: 57%;
+  float: left;
 }
 .article_wrapper{
   display: flex;
   flex-flow: row wrap;
-  width:68%;
+  justify-content: space-between;
 }
 .news__title{
   max-width: 260px;
@@ -67,7 +78,25 @@ body{
 .news__card{
   width: 40%;
   box-shadow: none;
-  margin: 0 5% 2% 0!important;
+  margin: 0 0 3% 0!important;
+}
+.bar_wrapper {
+  position: relative;
+  display: flex;
+  margin: 17% 0 0 0;
+  padding: 0;
+}
+.recharts-legend-wrapper{
+  width: 30px!important;
+  right: -10px!important;
+  bottom: 20%!important;
+}
+.recharts-wrapper{
+  width: 100%!important;
+  height: auto!important;
+}
+.recharts-wrapper .recharts-surface{
+  width: 100%!important;
 }
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
