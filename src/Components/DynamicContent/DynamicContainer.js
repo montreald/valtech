@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { withStyles, Tabs, Tab, Typography, AppBar } from '@material-ui/core'
 import SwipeableViews from 'react-swipeable-views'
 import SimpleBarChart from './DiagramsContainer'
+
 const tabsArray = [1998, 2002, 2006, 2012, 2014, 2018]
 
 const styles = theme => ({
@@ -10,10 +11,12 @@ const styles = theme => ({
     flexGrow: 1,
     boxShadow: 'none',
     overflow: 'hidden',
-    padding: '0 2%'
+    padding: '0 2%',
+    background: '#002140'
   },
   tabsRoot: {
-    margin: '20px 0'
+    margin: '20px 0',
+    color: '#fff'
   },
   tabsIndicator: {
     background: 'transparent'
@@ -23,9 +26,11 @@ const styles = theme => ({
     minWidth: 72,
     maxWidth: '10%',
     fontWeight: theme.typography.fontWeightRegular,
-    border: '1px solid #000',
-    background: '#fff',
+    border: '1px solid #fff',
+    background: '#002140',
+    color: '#fff',
     zIndex: 5,
+    borderRadius: 3,
     fontFamily: [
       '-apple-system',
       'BlinkMacSystemFont',
@@ -39,16 +44,19 @@ const styles = theme => ({
       '"Segoe UI Symbol"'
     ].join(','),
     '&:hover': {
-      color: '#40a9ff',
+      color: '#e6ff00',
       opacity: 1,
-      borderColor: '#40a9ff'
+      borderColor: '#e6ff00'
     },
     '&$tabSelected': {
-      color: '#1890ff',
-      fontWeight: theme.typography.fontWeightMedium
+      background: '#e6ff00',
+      fontWeight: theme.typography.fontWeightMedium,
+      color: '#000'
     },
     '&:focus': {
-      color: '#40a9ff'
+      color: '#000',
+      background: '#e6ff00',
+      borderColor: '#e6ff00'
     }
   },
   wrapper: {
@@ -57,7 +65,9 @@ const styles = theme => ({
     width: '100%'
   },
   tabSelected: {
-    borderColor: '#40a9ff'
+    borderColor: '#e6ff00',
+    color: '#fff',
+    background: '#002140'
   },
   typography: {
     padding: theme.spacing.unit * 3
@@ -96,7 +106,7 @@ class DynamicContainer extends Component {
     return (
       <Fragment>
         <div className={classes.root}>
-          <AppBar position="relative" color="default" className="app_tab">
+          <AppBar position="sticky" color="default" className="app_tab">
             <Tabs
               value={this.state.value}
               onChange={this.handleChange}
@@ -123,59 +133,63 @@ class DynamicContainer extends Component {
               })}
             </Tabs>
           </AppBar>
-          <div className="containt_wrapper">
-            <SwipeableViews
-              axis={theme.direction === 'ltr' ? 'x-reverse' : 'x'}
-              index={this.state.value}
-              onChangeIndex={this.handleChangeIndex}
-            >
-              {news.map(c => {
-                return (
-                  <TabContainer key={c.id} dir={theme.direction}>
-                    <Typography
-                      variant="display1"
-                      gutterBottom
-                      className="news__title"
-                    >
-                      {c.article_1}
-                    </Typography>
-                    <div className="article_wrapper">
-                      <Typography
-                        variant="subheading"
-                        gutterBottom
-                        className="news__card"
-                      >
-                        {c.article_2}
-                      </Typography>
-                      <Typography
-                        variant="subheading"
-                        gutterBottom
-                        className="news__card"
-                      >
-                        {c.article_3}
-                      </Typography>
-                      <Typography
-                        variant="subheading"
-                        gutterBottom
-                        className="news__card"
-                      >
-                        {c.article_4}
-                      </Typography>
-                      <Typography
-                        variant="subheading"
-                        gutterBottom
-                        className="news__card"
-                      >
-                        {c.article_5}
-                      </Typography>
-                    </div>
-                  </TabContainer>
-                )
-              })}
-            </SwipeableViews>
-          </div>
-          <div className="bar_wrapper">
-            <SimpleBarChart data={data} />
+          <div className="paralax_wrapper">
+            <div className="dunamic_containt_wrapper">
+              <div className="tabs_wrapper">
+                <SwipeableViews
+                  axis={theme.direction === 'ltr' ? 'x-reverse' : 'x'}
+                  index={this.state.value}
+                  onChangeIndex={this.handleChangeIndex}
+                >
+                  {news.map(c => {
+                    return (
+                      <TabContainer key={c.id} dir={theme.direction}>
+                        <Typography
+                          variant="display1"
+                          gutterBottom
+                          className="news__title"
+                        >
+                          {c.article_1}
+                        </Typography>
+                        <div className="article_wrapper">
+                          <Typography
+                            variant="subheading"
+                            gutterBottom
+                            className="news__card"
+                          >
+                            {c.article_2}
+                          </Typography>
+                          <Typography
+                            variant="subheading"
+                            gutterBottom
+                            className="news__card"
+                          >
+                            {c.article_3}
+                          </Typography>
+                          <Typography
+                            variant="subheading"
+                            gutterBottom
+                            className="news__card"
+                          >
+                            {c.article_4}
+                          </Typography>
+                          <Typography
+                            variant="subheading"
+                            gutterBottom
+                            className="news__card"
+                          >
+                            {c.article_5}
+                          </Typography>
+                        </div>
+                      </TabContainer>
+                    )
+                  })}
+                </SwipeableViews>
+              </div>
+              <div className="bar_wrapper">
+                <SimpleBarChart data={data} />
+              </div>
+            </div>
           </div>
         </div>
       </Fragment>

@@ -3,7 +3,7 @@ import { withStyles } from '@material-ui/core/styles'
 import PropTypes from 'prop-types'
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 import lightBlue from '@material-ui/core/colors/lightBlue'
-import { TopHeaderLogo } from '../Components/Navigation'
+import { TopHeaderLogo, TopHeader } from '../Components/Navigation'
 import StaticContainer from '../Components/StaticContent/StaticContainer'
 import DynamicContainer from '../Components/DynamicContent/DynamicContainer'
 import 'typeface-roboto'
@@ -18,6 +18,11 @@ const theme = createMuiTheme({
     secondary: lightBlue
   },
   typography: {
+    StaticContainer: {
+      root: {
+        color: '#002140'
+      }
+    },
     fontFamily: [
       '-apple-system',
       'BlinkMacSystemFont',
@@ -63,6 +68,7 @@ class Root extends Component {
     return (
       <MuiThemeProvider theme={theme}>
         <div className={classes.root}>
+          <TopHeader />
           <TopHeaderLogo />
           <StaticContainer />
           <DynamicContainer news={news} data={data} />

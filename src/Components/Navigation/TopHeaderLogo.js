@@ -2,19 +2,17 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
-import {
-  AppBar,
-  IconButton,
-  Toolbar,
-  Typography,
-} from '@material-ui/core'
+import { AppBar, Toolbar, Typography } from '@material-ui/core'
 
 /*import items and component*/
 import TopHeader from './TopHeader'
+import MobileMenu from './MenuMobile'
 
 const style = {
-    border: "none"
+  border: 'none'
 }
+
+const menuButtons = ['We are ipsum', 'We are dolr', 'iopsum', 'amet']
 
 export const styles = theme => ({
   root: {
@@ -26,26 +24,13 @@ export const styles = theme => ({
   flex: {
     color: '#fff'
   },
-  menuButton: {
-    marginLeft: -12,
-    marginRight: 20
-  },
-  list: {
-    width: 250
-  },
-  fullList: {
-    width: 'auto',
-    '&$selected': {
-      backgroundColor: theme.palette.action.selected
-    }
-  },
-  noBorder:{
+  noBorder: {
     display: 'flex',
-    fLexFlow:"row",
+    LexFlow: 'row',
     justifyContent: 'flex-end',
-    width:"100%",
-    marginLeft: "auto",
-    alignSelf: 'center',
+    width: '100%',
+    marginLeft: 'auto',
+    alignSelf: 'center'
   },
   button: {
     color: '#fff',
@@ -60,36 +45,20 @@ export const styles = theme => ({
       'sans-serif',
       '"Apple Color Emoji"',
       '"Segoe UI Emoji"',
-      '"Segoe UI Symbol"',
+      '"Segoe UI Symbol"'
     ].join(','),
     '&:active': {
       boxShadow: 'none',
-      color: "#bdbdbd",
-    },
+      color: '#bdbdbd'
+    }
   }
 })
 
 class TopBar extends Component {
   button = null
 
-  state = {
-    top: false,
-    left: false,
-    bottom: false,
-    right: false,
-    anchorEl: null,
-    selectedIndex: 1
-  }
-
   render() {
-    const {
-      classes,
-      className,
-      component,
-      selected,
-      role,
-      ...other
-    } = this.props
+    const { classes } = this.props
 
     return (
       <div>
@@ -104,27 +73,15 @@ class TopBar extends Component {
               LOGO
             </Typography>
             <div className={classes.noBorder}>
-              <Button
-                  className={classes.button}
-              >
-                We are ipsum
-              </Button>
-              <Button
-                  className={classes.button}
-              >
-                We are dolr
-              </Button>
-              <Button
-                  className={classes.button}
-              >
-                iopsum
-              </Button>
-              <Button
-                  className={classes.button}
-              >
-                amet
-              </Button>
+              {menuButtons.map((item, i) => {
+                return (
+                  <Button key={i} className={classes.button}>
+                    {item}
+                  </Button>
+                )
+              })}
             </div>
+            <MobileMenu menuButtons={menuButtons} />
           </Toolbar>
         </AppBar>
       </div>
