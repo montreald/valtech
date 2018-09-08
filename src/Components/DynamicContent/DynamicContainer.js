@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react'
 import PropTypes from 'prop-types'
+import ReactDOM from 'react-dom'
 import { withStyles, Tabs, Tab, Typography, AppBar } from '@material-ui/core'
 import SwipeableViews from 'react-swipeable-views'
 import SimpleBarChart from './DiagramsContainer'
@@ -88,8 +89,22 @@ TabContainer.propTypes = {
 }
 
 class DynamicContainer extends Component {
-  state = {
-    value: 0
+  constructor(props) {
+    super(props)
+    this.state = {
+      value: 0,
+      top: null
+    }
+    this.getPositionTab = this.getPositionTab.bind(this)
+  }
+
+  getPositionTab = e => {
+    if (window.innerWidth < 460) {
+      /*const pos = document.querySelector(".DynamicContainer-tabSelected-154+button");*/
+      const rect = ReactDOM.findDOMNode(e.target).getBoundingClientRect()
+      const moveParalax = rect.top + rect.height - 60
+      this.setState({ top: moveParalax })
+    }
   }
 
   handleChange = (event, value) => {
@@ -102,7 +117,6 @@ class DynamicContainer extends Component {
 
   render() {
     const { classes, theme, news, data } = this.props
-
     return (
       <Fragment>
         <div className={classes.root}>
@@ -121,6 +135,7 @@ class DynamicContainer extends Component {
               {tabsArray.map((t, i) => {
                 return (
                   <Tab
+                    onClick={this.getPositionTab}
                     key={i}
                     label={t}
                     disableRipple
@@ -133,7 +148,7 @@ class DynamicContainer extends Component {
               })}
             </Tabs>
           </AppBar>
-          <div className="paralax_wrapper">
+          <div className="paralax_wrapper" style={{ top: this.state.top }}>
             <div className="dunamic_containt_wrapper">
               <div className="tabs_wrapper">
                 <SwipeableViews

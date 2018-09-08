@@ -190,6 +190,23 @@ tabs__container{
   width: 57%;
   float: left;
 }
+.bar_wrapper header{
+  background: #002140;
+  box-shadow: none;
+}
+.bar_wrapper [class*="MuiTabs-flexContainer"]  button:nth-child(1){
+  color:#e6ff00;
+  border:1px solid #e6ff00;
+}
+.bar_wrapper [class*="MuiTabs-flexContainer"] button:nth-child(2){
+  color:#61e3e8;
+  border:1px solid #61e3e8;
+}
+.bar_wrapper [class*="MuiTabs-flexContainer"] button:nth-child(3){
+  color:#ffa32b;
+  border:1px solid #ffa32b;
+}
+
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
@@ -251,13 +268,36 @@ tabs__container{
     flex-flow: column;
   }
   .paralax_wrapper{
-    position:absolute;
+    position: absolute;
+    top: 135px;
+    width: 96vw;
+    background: #002140;
+    z-index: 10001;
   }
   .app_tab:after {
-    height: 1354px;
+    height: 1280px;
     width: 1px;
     position: absolute;
-    top: 7%;
+    top: 2%;
     left: 60%;
   }
+  .DynamicContainer-tabRoot-152.DynamicContainer-tabSelected-154:last-child {
+    margin-bottom: 1140px;
+  }
+
+  .DynamicContainer-tabRoot-152.DynamicContainer-tabSelected-154+button {
+    margin-bottom: 960px;
+  }
+  .paralax_wrapper div > .MuiTypography-body1-99 {
+    padding: 0 20px!important;
+  }
+[class*="DynamicContainer"] button{
+    margin-bottom: 10px;
+  }
+.static_container__wrapper+ div{
+  position: relative;
+}
+.bar_wrapper [class*="MuiTabs-flexContainer"]{
+  flex-flow: row;
+}
 }
